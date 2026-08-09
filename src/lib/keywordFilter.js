@@ -3,7 +3,6 @@ export function keywordFilter(keywords, filter) {
 
     const filteredKeywords = []
 
-
     for (let keyword in keywords) {
         if (keyword === filter) {
             filteredKeywords.push(filteredKeywords)
@@ -12,9 +11,6 @@ export function keywordFilter(keywords, filter) {
 
     }
 
-
-
-
-    // filter logic
+    return filteredKeywords
 
 }
