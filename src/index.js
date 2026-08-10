@@ -61,7 +61,6 @@ app.get('/', (req, res) => {
  *             required:
  *               - keywords
  *               - filter
- *               - filterType
  *             properties:
  *               keywords:
  *                 type: array
@@ -71,9 +70,6 @@ app.get('/', (req, res) => {
  *               filter:
  *                 type: string
  *                 example: "com"
- *               filterType:
- *                 type: string
- *                 example: "includes"
  *     responses:
  *       200:
  *         description: Keywords filtered successfully
@@ -84,7 +80,7 @@ app.get('/', (req, res) => {
  */
 app.post('/filter-keywords', (req, res) => {
     try {
-        const { keywords, filterType, filter } = req.body;
+        const { keywords, filter } = req.body;
 
         console.log("Keyword filter request:", req.body);
 
