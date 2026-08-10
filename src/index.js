@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import { keywordFilter } from "./lib/keywordFilter.js";
+import { sortList } from "./lib/sortList.js";
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import cors from "cors";
@@ -113,6 +114,43 @@ app.post('/filter-keywords', (req, res) => {
 
         return res.status(500).json({
             error: "Unable to filter keywords"
+        });
+    }
+});
+
+app.post('/sort-list', (req, res) => {
+    try {
+        const { items, criteria } = req.body;
+
+        console.log("Sort list request:", req.body);
+
+        // Check if item is array
+        if (!Array.isArray(items)) {
+            return res.status(400).json({
+                error: "items must be an array"
+            });
+        }
+        
+        // Sort items and set criteria
+        const data = sortList(items, criteria);
+
+        console.log("Sorted list:", data);
+        
+        // Return error If parameters are invalud
+        if (!data) {
+            return res.status(400).json({
+                error: "Unable to sort with the provided parameters"
+            });
+        }
+
+        return res.status(200).json({
+            sortedList: data
+        });
+    } catch (error) {
+        console.error("Sort list route error:", error);
+
+        return res.status(500).json({
+            error: "Unable to sort list"
         });
     }
 });
