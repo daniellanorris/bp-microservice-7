@@ -35,12 +35,18 @@ export function sortList(items, criteria = []) {
             const isDesc = ['desc', 'descending'].includes(String(rule.direction).toLowerCase());
             const multiplier = isDesc ? -1 : 1; 
             
-            // Compare similar data type values
-            const diff = (typeof valA === 'string' && typeof valB === 'string')
-                ? valA.localeCompare(valB)
+            let diff = 0;
 
-                // Compare numbers
-                : (valA < valB ? -1 : 1);
+            // Compare similar data type values
+            if (typeof valA === 'string' && typeof valB === 'string') {
+                diff = valA.localeCompare(valB);
+            } else if (typeof valA === 'number' && typeof valB === 'number') {
+                diff = valA - valB;
+            } else if (valA < valB) {
+                diff = -1;
+            } else {
+                diff = 1;
+            }
             
             // Use for determining if sort by ascending or descending order
             return diff * multiplier;
